@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class LineItemsController < ApplicationController
   # GET /line_items
   # GET /line_items.json
@@ -42,13 +44,14 @@ class LineItemsController < ApplicationController
   def create
     @cart = current_cart
     product = Product.find(params[:product_id])
-    @line_item = @cart.line_items.build(product: product)
+    @line_item = @cart.add_product(product.id)
 
     session[:counter] = 0
 
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @line_item.cart, notice: 'Line item was successfully created.' }
+        format.html { redirect_to store_url }
+        format.js { @current_item = @line_item }
         format.json { render json: @line_item, status: :created, location: @line_item }
       else
         format.html { render action: "new" }
@@ -77,11 +80,36 @@ class LineItemsController < ApplicationController
   # DELETE /line_items/1.json
   def destroy
     @line_item = LineItem.find(params[:id])
+    cart_id = @line_item.cart_id
     @line_item.destroy
 
     respond_to do |format|
-      format.html { redirect_to line_items_url }
+      format.html { redirect_to cart_url(cart_id), notice: '商品を削除しました' }
       format.json { head :no_content }
+    end
+  end
+
+  # PUT /line_items/1/decrement/
+  def decrement
+    @cart = current_cart
+    line_item = LineItem.find(params[:id])
+
+    if line_item.quantity > 1
+      line_item.quantity -= 1
+    else
+      line_item.destroy
+    end
+
+    respond_to do |format|
+      if line_item.save
+        format.html { redirect_to store_path, notice: 'Line item was successfully updates.' }
+        format.js { @current_item = @line_item }
+        format.json { head :ok }
+      else
+        format.html { render action: "edit" }
+        format.js { @current_item = @line_item }
+        format.json { render json: line_item.errors, status: :unprocessable_entity }
+      end
     end
   end
 end
