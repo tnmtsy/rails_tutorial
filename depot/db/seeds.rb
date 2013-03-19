@@ -1,3 +1,4 @@
+# encoding: utf-8
 #---
 # Excerpted from "Agile Web Development with Rails",
 # published by The Pragmatic Bookshelf.
@@ -6,7 +7,6 @@
 # We make no guarantees that this code is fit for any purpose. 
 # Visit http://www.pragmaticprogrammer.com/titles/rails4 for more book information.
 #---
-# encoding: utf-8
 Product.delete_all
 Product.create(title: 'CoffeeScript',
   description: 
@@ -43,3 +43,10 @@ Product.create(title: 'Rails Test Prescriptions',
       </p>},
   image_url: 'rtp.jpg',
   price: 34.95)
+
+PaymentType.delete_all
+PaymentType.create(:name => "現金")
+PaymentType.create(:name => "クレジットカード")
+PaymentType.create(:name => "注文書")
+
+LineItem.delete_all
