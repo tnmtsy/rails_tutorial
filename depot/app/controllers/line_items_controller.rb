@@ -84,7 +84,7 @@ class LineItemsController < ApplicationController
     @line_item.destroy
 
     respond_to do |format|
-      format.html { redirect_to cart_url(cart_id), notice: '商品を削除しました' }
+      format.html { redirect_to carts_url(cart_id), notice: '商品を削除しました' }
       format.json { head :no_content }
     end
   end

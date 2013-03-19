@@ -45,8 +45,8 @@ Product.create(title: 'Rails Test Prescriptions',
   price: 34.95)
 
 PaymentType.delete_all
-PaymentType.create(:name => "現金")
-PaymentType.create(:name => "クレジットカード")
-PaymentType.create(:name => "注文書")
+PaymentType.create(:name => "check")
+PaymentType.create(:name => "credit card")
+PaymentType.create(:name => "purchase")
 
 LineItem.delete_all
