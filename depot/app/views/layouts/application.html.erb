@@ -28,6 +28,15 @@
         <li><a href="">お問い合わせ</a></li>
       </ul>
 
+      <% if session[:user_id] %>
+        <ul>
+          <li><%= link_to '注文', orders_path %></li>
+          <li><%= link_to '商品', products_path %></li>
+          <li><%= link_to 'ユーザ', users_path %></li>
+        </ul>
+        <%= button_to 'ログアウト', logout_path, method: :delete %>
+      <% end %>
+
       <div style="color: white;"><%= Time.now %></div>
     </div>
     <div id="main">

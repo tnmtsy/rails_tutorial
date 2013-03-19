@@ -50,3 +50,6 @@ PaymentType.create(:name => "credit card")
 PaymentType.create(:name => "purchase")
 
 LineItem.delete_all
+
+User.delete_all
+User.create(:name => "john", :password => 'secret', :password_confirmation => 'secret')
